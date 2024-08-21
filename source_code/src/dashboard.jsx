@@ -1,83 +1,65 @@
-import React from 'react';
-import { Pie, Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
+import React from "react";
+import { FaUsers, FaChartLine, FaClock, FaEnvelope } from "react-icons/fa";
 
-// Register necessary chart components
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
-
-const Dashboard = () => {
-  // Pie Chart Data
-  const pieData = {
-    labels: data.map(brand => brand.brand),
-    datasets: [
-      {
-        data: data.map(brand => brand.total),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-      },
-    ],
-  };
-
-  // Stacked Bar Chart Data
-  const barData = {
-    labels: data.map(brand => brand.brand),
-    datasets: data.flatMap((brand, brandIndex) =>
-      brand.models.map((model, modelIndex) => ({
-        label: model.model,
-        data: data.map(b => b.models[modelIndex]?.count || 0),
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'][modelIndex % 3],
-      }))
-    ),
-  };
-
-  const barOptions = {
-    scales: {
-      x: { stacked: true },
-      y: { stacked: true },
-    },
-  };
-
+export default function Dashboard() {
   return (
-    <div>
-      <h1>Car Dashboard</h1>
-
-      {/* Table */}
-      {data.map((brandData, index) => (
-        <div key={index} style={{ marginBottom: '20px' }}>
-          <h3>{brandData.brand} = {brandData.total}</h3>
-          <table border="1" cellPadding="10">
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Number of Cars</th>
-                <th>Value (in Baht)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {brandData.models.map((model, modelIndex) => (
-                <tr key={modelIndex}>
-                  <td>{brandData.brand} / {model.model}</td>
-                  <td>{model.count}</td>
-                  <td>{model.value.toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="dashboard-container">
+      <div className="header">
+        <h2>All sites</h2>
+        <div className="header-actions">
+          <button>Last week</button>
+          <button>Set up dashboard</button>
         </div>
-      ))}
-
-      {/* Pie Chart */}
-      <div style={{ width: '400px', margin: '20px auto' }}>
-        <h3>Portion of Cars by Brand</h3>
-        <Pie data={pieData} />
       </div>
 
-      {/* Stacked Bar Chart */}
-      <div style={{ width: '600px', margin: '20px auto' }}>
-        <h3>Models of a Brand in a Bar</h3>
-        <Bar data={barData} options={barOptions} />
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-icon">
+            <FaUsers />
+          </div>
+          <div className="stat-info">
+            <h3>21.3K</h3>
+            <p>Users</p>
+            <p className="stat-change">-2.5%</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon">
+            <FaChartLine />
+          </div>
+          <div className="stat-info">
+            <h3>18.5K</h3>
+            <p>Sessions</p>
+            <p className="stat-change">+1.15%</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon">
+            <FaClock />
+          </div>
+          <div className="stat-info">
+            <h3>4m 41s</h3>
+            <p>Avg session duration</p>
+            <p className="stat-change">-3.5%</p>
+          </div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-icon">
+            <FaEnvelope />
+          </div>
+          <div className="stat-info">
+            <h3>1.2K</h3>
+            <p>Requests received</p>
+            <p className="stat-change">+1.15%</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="charts-container">
+        <div className="chart">Users by source</div>
+        <div className="chart">Sessions by country</div>
+        <div className="chart">Sessions</div>
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}

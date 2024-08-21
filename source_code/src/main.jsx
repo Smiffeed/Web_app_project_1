@@ -7,39 +7,19 @@ import {
 import "./index.css";
 import ErrorPage from "./error-page";
 import Dashboard from "./dashboard";
+import Nav from "./nav";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
-    loader: rootLoader,
-    action: rootAction,
+    element: <Nav />,            // Nav should contain an <Outlet /> for nested routes
     errorElement: <ErrorPage />,
     children: [
       {
-        errorElement: <ErrorPage />,
-        children: [
-          { index: true, element: <Dashboard /> },
-          {
-            path: "contacts/:contactId",
-            element: <Contact />,
-            loader: contactLoader,
-            action: contactAction,
-          },
-          {
-            path: "contacts/:contactId/edit",
-            element: <EditContact />,
-            loader: contactLoader,
-            action: editAction,
-          },
-          {
-            path: "contacts/:contactId/destroy",
-            action: destroyAction,
-            errorElement: <div>Oops! There was an error.</div>,
-          
-          },
-        ],
+        index: true,             // This route is loaded when the path is exactly "/"
+        element: <Dashboard />,  // Dashboard component will be displayed here
       },
+      // Add more routes as needed
     ],
   },
 ]);
