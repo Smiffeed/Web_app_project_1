@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import { Pie, Bar } from 'react-chartjs-2';
+import data from './data/taladrod-cars.json';
 import './App.css'
 
 function App() {
