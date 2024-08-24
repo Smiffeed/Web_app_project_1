@@ -19,7 +19,7 @@ export default function PieBarChart({ brandModelData }) {
           label: function(tooltipItem) {
             const label = tooltipItem.label || '';
             const value = tooltipItem.raw || 0;
-            const total = pieData.datasets[0].data.reduce((a, b) => a + b, 0);
+            const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
             const percentage = ((value / total) * 100).toFixed(2);
             return `${label}: ${value} cars (${percentage}%)`;
           }

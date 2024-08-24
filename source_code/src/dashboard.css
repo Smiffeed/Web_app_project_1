@@ -10,6 +10,15 @@ table, th, td {
     margin-right: 70px;
 }
 
+button#dropdown-basic {
+    background-color: #FF5733;
+    border: none;
+}
+
+span {
+    background-color: #6c757d;
+}
+
 .dashboard-container {
   padding: 0 15px;
 }

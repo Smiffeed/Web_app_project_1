@@ -120,7 +120,7 @@ export default function Dashboard() {
                   <tr>
                     <td rowSpan={Object.keys(filteredBrandModelData[brand].models).length + 1} className='text-center' style={{ verticalAlign: 'middle' }}>
                       <strong>{brand}</strong> <br />
-                      <span className="badge bg-success">{filteredBrandModelData[brand].count.toLocaleString()} cars</span> <br />
+                      <span className="badge">{filteredBrandModelData[brand].count.toLocaleString()} cars</span> <br />
                       <strong>Total: </strong>{filteredBrandModelData[brand].totalValue.toLocaleString()} Baht
                     </td>
                   </tr>
