@@ -4,24 +4,25 @@ import carData from "./data/taladrod-cars.min.json";
 import CarList from './components/highlightedCars/carList';
 import CarPicker from "./components/highlightedCars/Carpicker";
 import { Container } from "react-bootstrap";
+import localforage from 'localforage';
 import "./highlighted-cars.css";
 
-
-function highlightedCars() {
+function HighlightedCars() {
   const [highlightedCars, setHighlightedCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState(carData.Cars); // Initialize with all cars
 
-  // Load highlighted cars from localStorage on initial load
+  // Load highlighted cars from localforage on initial load
   useEffect(() => {
-    const savedHighlights = JSON.parse(localStorage.getItem('highlightedCars'));
-    if (savedHighlights) {
-      setHighlightedCars(savedHighlights);
-    }
+    localforage.getItem('highlightedCars').then((savedHighlights) => {
+      if (savedHighlights) {
+        setHighlightedCars(savedHighlights);
+      }
+    });
   }, []);
 
-  // Save highlighted cars to localStorage whenever the highlightedCars state changes
+  // Save highlighted cars to localforage whenever the highlightedCars state changes
   useEffect(() => {
-    localStorage.setItem('highlightedCars', JSON.stringify(highlightedCars));
+    localforage.setItem('highlightedCars', highlightedCars);
   }, [highlightedCars]);
 
   const handleHighlight = (car) => {
@@ -37,7 +38,6 @@ function highlightedCars() {
   const handleFilter = (filtered) => {
     setFilteredCars(filtered);
   };
-
 
   return (
     <div className="App">
@@ -55,4 +55,4 @@ function highlightedCars() {
   );
 }
 
-export default highlightedCars;
+export default HighlightedCars;
