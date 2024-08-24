@@ -1,5 +1,5 @@
-import React from "react";
-import { Table, Container } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Table, Container, Dropdown } from 'react-bootstrap';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import StackedBarChart from "./components/dashboard/stackBar"; 
 import PieBarChart from "./components/dashboard/pieChart"; 
@@ -18,6 +18,7 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
+  const [selectedBrand, setSelectedBrand] = useState('All');
   const cars = carsData.Cars;
 
   const processData = (cars) => {
@@ -63,6 +64,11 @@ export default function Dashboard() {
     }]
   };
 
+  // Filter data based on selected brand
+  const filteredBrandModelData = selectedBrand === 'All' 
+    ? brandModelData
+    : { [selectedBrand]: brandModelData[selectedBrand] };
+
   return (
     <Container className="dashboard-container mt-4">
       <link
@@ -76,6 +82,25 @@ export default function Dashboard() {
       </div>
 
       <h3>Table showing Number of Cars and Values (in Baht) by Brands and Models</h3>
+
+      {/* Dropdown for Brand Selection */}
+      <div className="dropdown-container mb-4">
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            {selectedBrand === 'All' ? 'Select Brand' : selectedBrand}
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => setSelectedBrand('All')}>All</Dropdown.Item>
+            {Object.keys(brandModelData).map((brand) => (
+              <Dropdown.Item key={brand} onClick={() => setSelectedBrand(brand)}>
+                {brand}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
+
       <div className="content-container">
         
         {/* Table */}
@@ -90,20 +115,20 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {Object.keys(brandModelData).map((brand, index) => (
+              {Object.keys(filteredBrandModelData).map((brand, index) => (
                 <React.Fragment key={index}>
                   <tr>
-                    <td rowSpan={Object.keys(brandModelData[brand].models).length + 1} className='text-center' style={{ verticalAlign: 'middle' }}>
+                    <td rowSpan={Object.keys(filteredBrandModelData[brand].models).length + 1} className='text-center' style={{ verticalAlign: 'middle' }}>
                       <strong>{brand}</strong> <br />
-                      <span className="badge bg-success">{brandModelData[brand].count.toLocaleString()} cars</span> <br />
-                      <strong>Total: </strong>{brandModelData[brand].totalValue.toLocaleString()} Baht
+                      <span className="badge bg-success">{filteredBrandModelData[brand].count.toLocaleString()} cars</span> <br />
+                      <strong>Total: </strong>{filteredBrandModelData[brand].totalValue.toLocaleString()} Baht
                     </td>
                   </tr>
-                  {Object.keys(brandModelData[brand].models).map((model, idx) => (
+                  {Object.keys(filteredBrandModelData[brand].models).map((model, idx) => (
                     <tr key={idx} className="text-center">
                       <td>{model}</td>
-                      <td>{brandModelData[brand].models[model].count}</td>
-                      <td>{brandModelData[brand].models[model].totalValue.toLocaleString()}</td>
+                      <td>{filteredBrandModelData[brand].models[model].count}</td>
+                      <td>{filteredBrandModelData[brand].models[model].totalValue.toLocaleString()}</td>
                     </tr>
                   ))}
                 </React.Fragment>
@@ -122,7 +147,7 @@ export default function Dashboard() {
           </div>
           <div className="chart stacked-bar-chart-container">
             <h3 className="mb-5">Car Models Distribution</h3>
-            <StackedBarChart brandModelData={brandModelData} />
+            <StackedBarChart brandModelData={filteredBrandModelData} />
           </div>
         </div>
       </div>

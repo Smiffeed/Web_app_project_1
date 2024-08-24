@@ -4,6 +4,12 @@ table, th, td {
   padding: 8px;
 }
 
+
+.table-container.mb-4 {
+    margin-left: 30px;
+    margin-right: 70px;
+}
+
 .dashboard-container {
   padding: 0 15px;
 }
