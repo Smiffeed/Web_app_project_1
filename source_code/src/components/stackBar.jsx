@@ -10,40 +10,52 @@ export default function StackedBarChart({ brandModelData }) {
     '#9966FF', '#FF9F40', '#FF6384', '#36A2EB', '#FFCE56'
   ];
 
-  // Prepare the data and options here
+  // Collect all unique models
+  const models = new Set();
+  Object.values(brandModelData).forEach(brand => {
+    Object.keys(brand.models).forEach(model => models.add(model));
+  });
+
+  const modelList = Array.from(models);
+
+  // Prepare the data for each model
   const data = {
-    labels: Object.keys(brandModelData),
-    datasets: Object.keys(brandModelData).flatMap((brand, brandIndex) => (
-      Object.keys(brandModelData[brand].models).map((model, modelIndex) => ({
-        label: model,
-        data: Object.keys(brandModelData).map(b => brandModelData[b].models[model]?.count || 0),
-        backgroundColor: colors[modelIndex % colors.length], // Assign different color to each model
-        stack: brand,
-      }))
-    ))
+    labels: Object.keys(brandModelData), // Car Brands
+    datasets: modelList.map((model, index) => ({
+      label: model,
+      data: Object.keys(brandModelData).map(brand => brandModelData[brand].models[model]?.count || 0),
+      backgroundColor: colors[index % colors.length],
+      stack: 'Stack 0', // Ensure all models are stacked
+    }))
   };
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
+  // Calculate the maximum value for any stacked bar
+  const maxStackValue = Math.max(...Object.keys(brandModelData).map(brand => 
+    modelList.reduce((acc, model) => acc + (brandModelData[brand].models[model]?.count || 0), 0)
+  ));
+
+  // Set a bit of padding to make the chart look better (optional)
+  const maxYValue = Math.ceil(maxStackValue * 1.1);  // Adding 10% padding
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
     },
-  },
-  scales: {
-    x: {
-      stacked: true,
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+        max: maxYValue,
+      },
     },
-    y: {
-      stacked: true,
-      max: 100,
-      ticks: {
-        stepSize: 10,
-      }      
-    },
-  },
-  barThickness: 20,
-  maxBarThickness: 40, // Set max thickness
-};
+    barThickness: 20,
+    maxBarThickness: 40, // Set max thickness
+  };
+
   return <Bar data={data} options={options} />;
 }
