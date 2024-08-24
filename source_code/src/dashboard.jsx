@@ -17,10 +17,8 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
-  // Get data from json file
   const cars = carsData.Cars;
 
-  // Preparing dataset for visualization
   const processData = (cars) => {
     const brandModelData = {};
 
@@ -54,6 +52,15 @@ export default function Dashboard() {
   };
 
   const brandModelData = processData(cars);
+
+  // Prepare data for the pie chart
+  const pieData = {
+    labels: Object.keys(brandModelData),
+    datasets: [{
+      data: Object.values(brandModelData).map(brand => brand.count),
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+    }]
+  };
 
   return (
     <Container className="dashboard-container mt-4">
@@ -107,13 +114,13 @@ export default function Dashboard() {
         {/* Charts */}
         <div className="charts-container">
           <div className="chart pie-chart-container mb-4">
-            <h3 className="mb-5">Car Distribution by Brand pie chart</h3>
+            <h3 className="mb-5">Car Distribution by Brand</h3>
             <div className="pie-chart">
               <PieBarChart brandModelData={brandModelData} />
             </div>
           </div>
           <div className="chart stacked-bar-chart-container">
-            <h3 className="mb-5">Car Models Distribution by stacked bar chart</h3>
+            <h3 className="mb-5">Car Models Distribution</h3>
             <StackedBarChart brandModelData={brandModelData} />
           </div>
         </div>
