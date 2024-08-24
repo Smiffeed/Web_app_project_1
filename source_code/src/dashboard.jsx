@@ -4,7 +4,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, Categ
 import StackedBarChart from "./components/dashboard/stackBar"; 
 import PieBarChart from "./components/dashboard/pieChart"; 
 import { RxDashboard } from "react-icons/rx";
-import carsData from './data/taladrod-cars.json';
+import carsData from './data/taladrod-cars.min.json';
 import "./dashboard.css";
 
 ChartJS.register(
