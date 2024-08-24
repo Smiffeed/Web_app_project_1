@@ -163,17 +163,3 @@ nav ul li a .icon {
 .stat-change {
   color: #e74c3c; /* For negative */
 }
-
-.charts-container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-}
-
-.chart {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-

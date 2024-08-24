@@ -1,6 +1,5 @@
 import React from "react";
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto';
 
 export default function StackedBarChart({ brandModelData }) {
   // Define a list of colors to use
@@ -57,5 +56,5 @@ export default function StackedBarChart({ brandModelData }) {
     maxBarThickness: 40, // Set max thickness
   };
 
-  return <Bar data={data} options={options} />;
+  return <Bar data={data} options={options}/>;
 }
