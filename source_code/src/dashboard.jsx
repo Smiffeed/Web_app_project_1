@@ -3,6 +3,7 @@ import { Table, Container } from 'react-bootstrap';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import StackedBarChart from "./components/dashboard/stackBar"; 
 import PieBarChart from "./components/dashboard/pieChart"; 
+import { RxDashboard } from "react-icons/rx";
 import carsData from './data/taladrod-cars.json';
 import "./dashboard.css";
 
@@ -71,7 +72,7 @@ export default function Dashboard() {
         crossOrigin="anonymous"
       />
       <div className="header mb-4">
-        <h1>Dashboard</h1>
+        <h1><RxDashboard className="icon" /> Dashboard</h1>
       </div>
 
       <h3>Table showing Number of Cars and Values (in Baht) by Brands and Models</h3>

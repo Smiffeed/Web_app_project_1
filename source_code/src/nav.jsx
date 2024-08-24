@@ -3,13 +3,14 @@ import {
   NavLink,
 } from "react-router-dom";
 import { RxDashboard } from "react-icons/rx";
+import { MdOutlineQueryStats } from "react-icons/md";
 import { FaCar } from "react-icons/fa";
 
 export default function Nav() {
   return (
     <>
       <div id="sidebar">
-        <h1>Car Market Analytics</h1>
+        <h1><MdOutlineQueryStats className="icon" /> Car Market Analytics</h1>
         <nav>
           <ul>
             <li>
