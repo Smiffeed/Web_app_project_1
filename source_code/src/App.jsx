@@ -1,35 +1,57 @@
-import React from 'react';
-import { Pie, Bar } from 'react-chartjs-2';
-import data from './data/taladrod-cars.json';
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import CarHighlight from "./component/carHighlight";
+import carData from "./data/taladrod-cars.min.json";
+import CarList from './component/carList';
+import CarPicker from "./component/CarPicker";
+import { Container } from "react-bootstrap";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [highlightedCars, setHighlightedCars] = useState([]);
+  const [filteredCars, setFilteredCars] = useState(carData.Cars); // Initialize with all cars
+
+  // Load highlighted cars from localStorage on initial load
+  useEffect(() => {
+    const savedHighlights = JSON.parse(localStorage.getItem('highlightedCars'));
+    if (savedHighlights) {
+      setHighlightedCars(savedHighlights);
+    }
+  }, []);
+
+  // Save highlighted cars to localStorage whenever the highlightedCars state changes
+  useEffect(() => {
+    localStorage.setItem('highlightedCars', JSON.stringify(highlightedCars));
+  }, [highlightedCars]);
+
+  const handleHighlight = (car) => {
+    if (!highlightedCars.some(c => c.Cid === car.Cid)) {
+      setHighlightedCars([...highlightedCars, car]);
+    }
+  };
+
+  const handleRemove = (car) => {
+    setHighlightedCars(highlightedCars.filter(c => c.Cid !== car.Cid));
+  };
+
+  const handleFilter = (filtered) => {
+    setFilteredCars(filtered);
+  };
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <Container className="mt-5">
+        <h2>Car Searching</h2>
+        <CarPicker cars={carData.Cars} onFilter={handleFilter} />
+
+        <h2 className="mt-5">Highlighted Cars</h2>
+        <CarHighlight highlightedCars={highlightedCars} onRemove={handleRemove} />
+
+        <h2 className="mt-5">Available Cars</h2>
+        <CarList cars={filteredCars} highlightedCars={highlightedCars} onHighlight={handleHighlight} />
+      </Container>
+    </div>
+  );
 }
 
-export default App
+export default App;
