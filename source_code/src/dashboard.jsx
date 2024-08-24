@@ -71,7 +71,7 @@ export default function Dashboard() {
         crossOrigin="anonymous"
       />
       <div className="header mb-4">
-        <h2>Dashboard</h2>
+        <h1>Dashboard</h1>
       </div>
 
       <h3>Table showing Number of Cars and Values (in Baht) by Brands and Models</h3>
