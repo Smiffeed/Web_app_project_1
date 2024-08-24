@@ -25,7 +25,7 @@ export default function Nav() {
             </li>
             <li>
               <NavLink
-                to="/my-sites"
+                to="/highlighted-cars"
                 className={({ isActive }) =>
                   isActive ? "active" : undefined
                 }

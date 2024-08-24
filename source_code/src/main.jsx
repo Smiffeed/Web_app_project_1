@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
+import "./dashboard.css";
 import ErrorPage from "./error-page";
 import Dashboard from "./dashboard";
 import Nav from "./nav";
