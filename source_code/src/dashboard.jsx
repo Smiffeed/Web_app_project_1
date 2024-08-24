@@ -1,8 +1,8 @@
 import React from "react";
 import { Table, Container } from 'react-bootstrap';
+import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, BarElement, CategoryScale, LinearScale } from 'chart.js';
-import StackedBarChart from "./components/dashboard/stackBar"; 
-import PieBarChart from "./components/dashboard/pieChart"; 
+import StackedBarChart from "./components/stackBar"; 
 import carsData from './data/taladrod-cars.json';
 import "./dashboard.css";
 
@@ -62,6 +62,19 @@ export default function Dashboard() {
     }]
   };
 
+  // Prepare data for the stacked bar chart
+  const barData = {
+    labels: Object.keys(brandModelData),
+    datasets: Object.keys(brandModelData).flatMap(brand => (
+      Object.keys(brandModelData[brand].models).map(model => ({
+        label: model,
+        data: Object.keys(brandModelData).map(b => brandModelData[b].models[model]?.count || 0),
+        backgroundColor: '#FF8042', // Use different colors if needed
+        stack: brand,
+      }))
+    ))
+  };
+
   return (
     <Container className="dashboard-container mt-4">
       <link
@@ -116,9 +129,32 @@ export default function Dashboard() {
           <div className="chart pie-chart-container mb-4">
             <h3 className="mb-5">Car Distribution by Brand</h3>
             <div className="pie-chart">
-              <PieBarChart brandModelData={brandModelData} />
-            </div>
+            <Pie
+              data={pieData}
+              options={{
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      label: function(tooltipItem) {
+                        const label = tooltipItem.label || '';
+                        const value = tooltipItem.raw || 0;
+                        const total = pieData.datasets[0].data.reduce((a, b) => a + b, 0);
+                        const percentage = ((value / total) * 100).toFixed(2);
+                        return `${label}: ${value} cars (${percentage}%)`;
+                      }
+                    }
+                  },
+                  legend: {
+                    display: true,
+                    position: 'top'
+                  }
+                }
+              }}
+              style={{ width: '100%', height: 'auto' }} // Ensure chart resizes properly
+            />
           </div>
+        </div>
           <div className="chart stacked-bar-chart-container">
             <h3 className="mb-5">Car Models Distribution</h3>
             <StackedBarChart brandModelData={brandModelData} />
