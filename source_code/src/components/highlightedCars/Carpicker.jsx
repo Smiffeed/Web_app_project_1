@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const CarPicker = ({ cars, onFilter }) => {
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedModel, setSelectedModel] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("Any");
+  const [selectedModel, setSelectedModel] = useState("Any");
+  const [selectedYear, setSelectedYear] = useState("Any");
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [years, setYears] = useState([]);

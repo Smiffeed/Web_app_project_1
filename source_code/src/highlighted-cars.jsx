@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import CarHighlight from "./component/carHighlight";
+import CarHighlight from "./components/highlightedCars/carHighlight";
 import carData from "./data/taladrod-cars.min.json";
-import CarList from './component/carList';
-import CarPicker from "./component/CarPicker";
+import CarList from './components/highlightedCars/carList';
+import CarPicker from "./components/highlightedCars/Carpicker";
 import { Container } from "react-bootstrap";
+import "./highlighted-cars.css";
 
 
-function App() {
+function highlightedCars() {
   const [highlightedCars, setHighlightedCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState(carData.Cars); // Initialize with all cars
 
@@ -54,4 +55,4 @@ function App() {
   );
 }
 
-export default App;
+export default highlightedCars;

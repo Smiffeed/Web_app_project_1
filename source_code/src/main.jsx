@@ -6,9 +6,12 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import "./dashboard.css";
+import "./highlighted-cars.css"
 import ErrorPage from "./error-page";
 import Dashboard from "./dashboard";
+import HighlightedCar from "./highlighted-cars";
 import Nav from "./nav";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,10 @@ const router = createBrowserRouter([
         index: true,             // This route is loaded when the path is exactly "/"
         element: <Dashboard />,  // Dashboard component will be displayed here
       },
-      // Add more routes as needed
+      {
+        path: "highlighted-cars",
+        element: <HighlightedCar />,
+      },
     ],
   },
 ]);
