@@ -15,10 +15,11 @@ export default function Nav() {
           <ul>
             <li>
               <NavLink
-                to="/"
+                to="/car-market-analysis"
                 className={({ isActive }) =>
                   isActive ? "active" : undefined
                 }
+                end // Ensure only exact match for root path
               >
                 <RxDashboard className="icon" />
                 Dashboard
@@ -26,7 +27,7 @@ export default function Nav() {
             </li>
             <li>
               <NavLink
-                to="/highlighted-cars"
+                to="/car-market-analysis/highlighted-cars" // Nested path
                 className={({ isActive }) =>
                   isActive ? "active" : undefined
                 }

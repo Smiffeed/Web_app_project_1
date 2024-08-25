@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/car-market-analysis",
     element: <Nav />,            // Nav should contain an <Outlet /> for nested routes
     errorElement: <ErrorPage />,
     children: [
